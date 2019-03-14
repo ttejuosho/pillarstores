@@ -6,6 +6,10 @@ var cart = {};
 
 switch (action){
     case "buy":
-        getCart();
+        addToCart();
         break;
+}
+
+function addToCart(){
+
 }
