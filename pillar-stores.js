@@ -1,3 +1,6 @@
+// Load the fs package to read and write
+var fs = require("fs");
+
 var action = process.argv[2];
 var item = process.argv[3];
 var quantity = process.argv[4];
@@ -32,5 +35,11 @@ function getPrice(item){
 }
 
 function addToCart(){
-
+    var price = getPrice(item);
+    fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
+        if (err) {
+            return console.log(err);
+          }
+    })
+    console.log(item + " - $" + price, "added to cart");
 }
