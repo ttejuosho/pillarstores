@@ -54,13 +54,17 @@ function getPrice(item){
 }
 
 function addToCart(item){
-    var price = getPrice(item);
-    fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
-        if (err) {
-            return console.log(err);
-          }
-    })
-    console.log(item + " - $" + price, "was added to cart");
+    if (priceList[item] !== undefined){
+        var price = getPrice(item);
+        fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
+            if (err) {
+                return console.log(err);
+              }
+        })
+        console.log(item + " - $" + price, "added to cart");
+    } else {
+        console.log("Item not available in store or out of stock");
+    }
 }
 
 function getCart(){
@@ -80,15 +84,24 @@ function getCart(){
 }
 
 function getTotal(){
-    fs.readFile("items.txt", "utf8", function(err, data){
+    var total = 0;
+    fs.readFile("items.txt", "utf8", function(err,data){
         if (err) {
             return console.log(err);
           }
           data = data.split(", ");
-          var total = 0;
           for (var i = 0; i < data.length; i++) {
               total = total + parseFloat(data[i].split(" - ")[1].slice(1))
             }
             console.log("Your Pre-tax total is $" + total);
+            var discount = total*0.1
+            total = total - discount;
+
+            console.log("\nCongratulations!! Your purchase qualifies for a one time 10% discount on groceries.\n");
+            console.log("Calculating new total ...\n\n");
+            console.log("Applying discount ...\n\n");
+            console.log("Please Wait ...\n\n");
+            console.log("You new total for this purchase is $" +  total);
+            console.log("\nYou saved $" + discount.toFixed(2));
     })
 }
