@@ -23,7 +23,7 @@ switch (action){
         break;
 
     case "buy":
-        addToCart(item);
+        addToCart(item, quantity);
         break;
 
     case "mycart":
@@ -57,9 +57,10 @@ function getPrice(item){
     }
 }
 
-function addToCart(item){
+function addToCart(item, quantity){
     if (priceList[item] !== undefined){
         var price = getPrice(item);
+        if (quantity){ price = price*quantity }
         fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
             if (err) {
                 return console.log(err);
