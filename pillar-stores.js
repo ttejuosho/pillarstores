@@ -37,6 +37,10 @@ switch (action){
     case "pricelist":
         getPriceList();
         break;
+    
+    case "remove":
+        removeFromCart(item);
+        break;
 }
 
 function getPriceList(){
@@ -103,5 +107,34 @@ function getTotal(){
             console.log("Please Wait ...\n\n");
             console.log("You new total for this purchase is $" +  total);
             console.log("\nYou saved $" + discount.toFixed(2));
+    })
+}
+
+function removeFromCart(item){
+    fs.readFile("items.txt", "utf8", function(err,data){
+        if (err) {
+            return console.log(err);
+          }
+          data = data.split(", ");
+          var cartItems = [];
+          for (var i = 0; i < data.length; i++) {
+              cartItems.push(data[i].split(" - ")[0])
+            }
+            
+            var index = cartItems.indexOf(item);
+            cartItems.splice(index, 1);
+            fs.writeFile("items.txt", "", function(err){
+                if (err) {
+                    return console.log(err);
+                  }
+            })
+            cartItems.forEach(function(o){
+                console.log(o + " - $" + priceList[o]);
+                fs.appendFile("items.txt", o + " - $" + priceList[o] + ", ", function(err){
+                    if (err) {
+                        return console.log(err);
+                      }
+                })
+            })
     })
 }
