@@ -19,27 +19,46 @@ var priceList = {
 
 switch (action){
     case "price":
-    getPrice(item);
-    break;
+        getPrice(item);
+        break;
     case "buy":
         addToCart(item);
+        break;
+    case "mycart":
+        getCart();
         break;
 }
 
 function getPrice(item){
-    if (priceList[item] !== undefined){
+    //if (item){
         return priceList[item];
-    } else {
-        console.log("Item not available in store or out of stock");
-    }
+    // } else {
+    //     console.log("Item not available in store or out of stock");
+    // }
 }
 
-function addToCart(){
+function addToCart(item){
     var price = getPrice(item);
     fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
         if (err) {
             return console.log(err);
           }
     })
-    console.log(item + " - $" + price, "added to cart");
+    console.log(item + " - $" + price, "was added to cart");
+}
+
+function getCart(){
+    fs.readFile("items.txt", "utf8", function(err, data){
+        if (err) {
+            return console.log(err);
+          }
+          data = data.split(", ");
+          console.log("==============================");
+          console.log("Here are the Items in you cart");
+          console.log("==============================\n");
+          for (var i = 0; i < data.length; i++) {
+                console.log(data[i]);
+          }
+          console.log("\n==============================");
+    })
 }
