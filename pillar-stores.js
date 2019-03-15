@@ -33,14 +33,24 @@ switch (action){
     case "total":
         getTotal();
         break;
+    
+    case "pricelist":
+        getPriceList();
+        break;
+}
+
+function getPriceList(){
+    for (var item in priceList){
+        console.log(item + " - $" + priceList[item] + " each.");
+    }
 }
 
 function getPrice(item){
-    //if (item){
+    if (priceList[item] !== undefined){
         return priceList[item];
-    // } else {
-    //     console.log("Item not available in store or out of stock");
-    // }
+    } else {
+        console.log("Item not available in store or out of stock");
+    }
 }
 
 function addToCart(item){
