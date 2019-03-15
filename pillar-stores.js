@@ -21,11 +21,17 @@ switch (action){
     case "price":
         getPrice(item);
         break;
+
     case "buy":
         addToCart(item);
         break;
+
     case "mycart":
         getCart();
+        break;
+
+    case "total":
+        getTotal();
         break;
 }
 
@@ -60,5 +66,19 @@ function getCart(){
                 console.log(data[i]);
           }
           console.log("\n==============================");
+    })
+}
+
+function getTotal(){
+    fs.readFile("items.txt", "utf8", function(err, data){
+        if (err) {
+            return console.log(err);
+          }
+          data = data.split(", ");
+          var total = 0;
+          for (var i = 0; i < data.length; i++) {
+              total = total + parseFloat(data[i].split(" - ")[1].slice(1))
+            }
+            console.log("Your Pre-tax total is $" + total);
     })
 }
