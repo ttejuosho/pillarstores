@@ -41,6 +41,10 @@ switch (action){
     case "remove":
         removeFromCart(item);
         break;
+              
+    case "quantity":
+        getItemQuantity(item);
+        break;
 }
 
 function getPriceList(){
@@ -137,5 +141,27 @@ function removeFromCart(item){
                       }
                 })
             })
+    })
+}
+
+function getItemQuantity(item){   
+    fs.readFile("items.txt", "utf8", function(err, data){
+        var itemQuantity = {};
+        var cartItems = [];
+        if (err) {
+            return console.log(err);
+          }
+        data = data.split(", ");
+        for (var i = 0; i < data.length; i++) {
+            cartItems.push(data[i].split(" - ")[0])
+          }
+
+        for (var i = 0; i < cartItems.length; i++) {
+            var num = cartItems[i];
+            itemQuantity[num] = itemQuantity[num] ? itemQuantity[num] + 1 : 1;
+        }
+
+        if (itemQuantity[item] !== undefined) { console.log("Item Quantity " + itemQuantity[item]); }
+        return itemQuantity[item];
     })
 }
