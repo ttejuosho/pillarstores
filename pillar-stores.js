@@ -69,7 +69,7 @@ function addToCart(item, quantity){
             return;
         }
 
-        if (item === "beef" || item === "chicken" && !quantity.includes("lbs")){
+        if (item === "beef" && !quantity.includes("lbs") || item === "chicken" && !quantity.includes("lbs")){
             console.log("Please enter correct weight of item needed. Example: 4lbs");
             return;
         }
