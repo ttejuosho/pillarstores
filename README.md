@@ -10,4 +10,4 @@ You need Node Js installed to run this command line application
 5. View your cart with -- node pillar-stores mycart
 6. Get Quantity of each item in your cart using - node pillar-stores quantity (insert item name from cart here)
 7. View your total with -- node pillar-stores total
-8. Remove an item from the cart with -- node pillar-stores remove (insert item name from Inventory here) 
+8. Remove an item from the cart with -- node pillar-stores remove (insert item name from Inventory here)
