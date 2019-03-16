@@ -63,14 +63,36 @@ function getPrice(item){
 
 function addToCart(item, quantity){
     if (priceList[item] !== undefined){
+        
+        if (quantity === undefined){
+            console.log("Please Enter weight/quantity for the item");
+            return;
+        }
+
+        if (item === "beef" || item === "chicken" && !quantity.includes("lbs")){
+            console.log("Please enter correct weight of item needed. Example: 4lbs");
+            return;
+        }
         var price = getPrice(item);
-        if (quantity){ price = price*quantity }
-        fs.appendFile("items.txt", ", " + item + " - $" + price, function(err){
+
+        if (quantity.includes('lbs')) {
+            quantity = quantity.slice(0, -3)
+            price = price * parseFloat(quantity) 
+        } else { 
+            price = price * quantity 
+        }
+
+        cerealMarkdown15(item, price);
+        buyOneGetOneFreeBagles(item, price);
+
+        fs.appendFile("items.txt", ", " + item + " - $" + price.toFixed(2), function(err){
             if (err) {
                 return console.log(err);
               }
         })
-        console.log(item + " - $" + price, "added to cart");
+
+        console.log(item + " - $" + price.toFixed(2), "added to cart");
+
     } else {
         console.log("Item not available in store or out of stock");
     }
@@ -164,4 +186,24 @@ function getItemQuantity(item){
         if (itemQuantity[item] !== undefined) { console.log("Item Quantity " + itemQuantity[item]); }
         return itemQuantity[item];
     })
+}
+
+function buyOneGetOneFreeBagles(item, price){
+    if (item === "bagles" && getItemQuantity(item) > 1){
+        console.log("Youre getting 1 free bagle because you purchased at least 2 bagles\n");
+        price = price - getPrice(item);
+        return price;
+    } else {
+        return false;
+    }
+}
+
+function cerealMarkdown15(item, price){
+    if (item === "cereal"){
+        console.log("Cereals are currently marked down 15%, so you save an extra $1.89\n");
+        price = price - 1.89;
+        return price;
+    } else {
+        return false;
+    }
 }

@@ -7,5 +7,6 @@ POS System
 # Sample commands View Inventory and prices with --- node pillar-stores pricelist
 # Make purchases by running -- node pillar-stores buy (insert item name from Inventory here)
 # View your cart with -- node pillar-stores mycart
+# Get Quantity of each item in your cart using - node pillar-stores quantity (insert item name from cart here)
 # View your total with -- node pillar-stores total
 # Remove an item from the cart with -- node pillar-stores remove (insert item name from Inventory here) 
